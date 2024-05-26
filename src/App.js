@@ -1,24 +1,55 @@
 import logo from './logo.svg';
 import './App.css';
-import dresser from './images/dresser.jpg'
+import './room.css';
+//import Dresser from './images/dresser.jpg'
+import React from 'react';
+import products from './products.json';
 
 function App() {
-  return (
+    const PRODUCTS = products;
+    const images = [require('./images/dresser.jpg')];
+
+    const dresserName = PRODUCTS[0].name;
+    console.log(PRODUCTS[0].link);
+    const dresserLink = PRODUCTS[0].link;
+    console.log(PRODUCTS[0].image);
+    const dImg = images[0];
+
+    const dresserImg = require("./images/dresser.jpg");
+
+    return (
       <>
-          <div className="Room">
-              <Product
-                  type={"dresser"}
-              />
-          </div></>
-  );
+            <div className="App">
+                <div className='Room'>
+                <Product
+                    type={dresserName}
+                    link={dresserLink}
+                    img={dImg}
+                    />
+                    </div>
+            </div></>
+    );
 }
 
-function Product({ type }) {
+function Room({ productDetails, images }) {
+    //make the products array
     return (
         <>
-            <a href="https://www.google.com" className="Product">
-                <img src={dresser} alt={type} />
-            </a>
+            <div className='room'>
+                {products}
+            </div>
+        </>
+        );
+}
+
+function Product({ type, link, img }) {
+    return (
+        <>
+            <div className="Product">
+                <a href={link} className={type}>
+                    <img src={img} className={type} alt={type} />
+                </a>
+            </div>
         </>
     );
 }
