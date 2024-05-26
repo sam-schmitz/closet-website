@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+
+.Room {
+    background-image: url("./images/emptyroom.jpg");
+    font-size: 20px;
+    min-height: 980px;
+}
