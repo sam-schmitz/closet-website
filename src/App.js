@@ -6,13 +6,11 @@ import React from 'react';
 import products from './products.json';
 
 function App() {
-    const PRODUCTS = products;
-    const images = [require('./images/dresser.jpg')];
+    const PRODUCTS = require('./products.json')
+    const images = [require('./images/dresser.jpg'), require('./images/tv.jpg')];
 
     const dresserName = PRODUCTS[0].name;
-    console.log(PRODUCTS[0].link);
     const dresserLink = PRODUCTS[0].link;
-    console.log(PRODUCTS[0].image);
     const dImg = images[0];
 
     const dresserImg = require("./images/dresser.jpg");
@@ -20,22 +18,30 @@ function App() {
     return (
       <>
             <div className="App">
-                <div className='Room'>
-                <Product
-                    type={dresserName}
-                    link={dresserLink}
-                    img={dImg}
-                    />
-                    </div>
+                <Room
+                    productDetails={PRODUCTS}
+                    images={images}
+                />
             </div></>
     );
 }
 
 function Room({ productDetails, images }) {
     //make the products array
+    products = [];
+    for (let i = 0; i < productDetails.length; i++) {
+        products.push(
+            <Product
+                type={productDetails[i].name}
+                link={productDetails[i].link}
+                img={images[i]}
+            />
+        );
+    }
+
     return (
         <>
-            <div className='room'>
+            <div className='Room'>
                 {products}
             </div>
         </>
@@ -45,11 +51,9 @@ function Room({ productDetails, images }) {
 function Product({ type, link, img }) {
     return (
         <>
-            <div className="Product">
-                <a href={link} className={type}>
-                    <img src={img} className={type} alt={type} />
-                </a>
-            </div>
+            <a href={link} className={type}>
+                <img src={img} className={type} alt={type} />
+            </a>
         </>
     );
 }

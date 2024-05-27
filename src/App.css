@@ -5,6 +5,13 @@
 }
 
 .Dresser {
+    display: block;
+    width: 100px;
+    height: 100px;
+}
+
+.TV {
+    display: block;
     width: 100px;
     height: 100px;
 }
