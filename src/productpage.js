@@ -1,14 +1,15 @@
 // productpage.js
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import './productpage.css';
+
+const PRODUCTS = require('./products.json')
+const IMAGES = [require('./images/dresser.jpg'), require('./images/tv.jpg')];
 
 function ProductPage() {
-    const products = [
-        { id: 1, name: 'Product 1', description: 'This is product 1' },
-        { id: 2, name: 'Product 2', description: 'This is product 2' },
-    ];
+
     const { id } = useParams();
-    const product = products.find(p => p.id === parseInt(id));
+    const product = PRODUCTS.find(p => p.id === parseInt(id));
 
     if (!product) {
         return <div>Product not found</div>;
@@ -16,34 +17,51 @@ function ProductPage() {
 
     return (
         <>
-            <div>
-                <h1>{product.name}</h1>
-                <p>{product.description}</p>
+            <Header />
+            <div className='containerLR'>
+                <div className='left'>
+                    <ProductImages
+                        imgs={IMAGES[product.id]}
+                    />
+                </div>
+                <div className='right'>
+                    <ProductInfo
+                        product={product}
+                    />
+                </div>
             </div>
         </>
         );
 }
 
-function header() {
+function Header() {
     return (
         <>
-
+            <div className="header">
+                <div className="path"></div>
+                <div className="logo"></div>
+                <h1>Header</h1>
+            </div>
         </>
         );
 }
 
-function productImages() {
+function ProductImages({imgs}) {
     return (
         <>
-
+            <div className="productImages">
+                <img src={imgs} alt='words' />
+            </div>
         </>
         );
 }
 
-function productInfo() {
+function ProductInfo({product}) {
     return (
         <>
-
+            <div className="productInfo">
+                <h1>{product.name}</h1>
+            </div>
         </>
         );
 }

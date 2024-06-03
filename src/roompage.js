@@ -1,8 +1,6 @@
 // roompage.js
 import React from 'react';
 import products from './products.json';
-import './App.css';
-import './room.css';
 import { Link } from 'react-router-dom';
 
 const ps = [
