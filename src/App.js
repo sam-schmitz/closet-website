@@ -4,6 +4,10 @@ import './room.css';
 //import Dresser from './images/dresser.jpg'
 import React from 'react';
 import products from './products.json';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import RoomPage from './roompage.js'
+import ProductPage from './productpage.js'
+
 
 function App() {
     const PRODUCTS = require('./products.json')
@@ -15,46 +19,19 @@ function App() {
 
     const dresserImg = require("./images/dresser.jpg");
 
+    //const room = <Room productDetails={PRODUCTS} images={images} />;
+
     return (
       <>
             <div className="App">
-                <Room
-                    productDetails={PRODUCTS}
-                    images={images}
-                />
+                <Router>
+                    <Routes>
+                        <Route path='/' element={<RoomPage />} />
+                        <Route path='/product/:id' element={<ProductPage />} />
+                    </Routes>
+                </Router>
+                
             </div></>
-    );
-}
-
-function Room({ productDetails, images }) {
-    //make the products array
-    products = [];
-    for (let i = 0; i < productDetails.length; i++) {
-        products.push(
-            <Product
-                type={productDetails[i].name}
-                link={productDetails[i].link}
-                img={images[i]}
-            />
-        );
-    }
-
-    return (
-        <>
-            <div className='Room'>
-                {products}
-            </div>
-        </>
-        );
-}
-
-function Product({ type, link, img }) {
-    return (
-        <>
-            <a href={link} className={type}>
-                <img src={img} className={type} alt={type} />
-            </a>
-        </>
     );
 }
 
