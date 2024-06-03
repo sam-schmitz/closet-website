@@ -26,7 +26,10 @@ function App() {
             <div className="App">
                 <Router>
                     <Routes>
-                        <Route path='/' element={<RoomPage />} />
+                        <Route path='/' element={<RoomPage
+                            productDetails={PRODUCTS}
+                            images={images}
+                        />} />
                         <Route path='/product/:id' element={<ProductPage />} />
                     </Routes>
                 </Router>

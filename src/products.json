@@ -3,12 +3,14 @@
     "name": "Dresser",
     "height": "100px",
     "width": "100px",
-    "link":  "https://www.google.com"
+    "link": "https://www.google.com",
+    "id": 1
   },
   {
     "name": "TV",
     "height": "100px",
     "width": "100px",
-    "link": "https://www.bing.com"
+    "link": "https://www.bing.com",
+    "id":  2
   }
 ]

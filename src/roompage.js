@@ -10,32 +10,25 @@ const ps = [
     { id: 2, name: 'Product 2' }
 ];
 
-function RoomPage() {
+function RoomPage({ productDetails, images}) {
     return (
         <>
-            <div>
-                <ul>
-                    {ps.map(product => (
-                        <li key={product.id}>
-                            <Link to={`/product/${product.id}`}>
-                                {product.name}
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+            <Room
+                productDetails={productDetails}
+                images={images}
+            />
         </>
         )
 }
-/*
+
 function Room({ productDetails, images }) {
     //make the products array
+    console.log(productDetails);
     products = [];
     for (let i = 0; i < productDetails.length; i++) {
         products.push(
             <Product
-                type={productDetails[i].name}
-                link={productDetails[i].link}
+                product={productDetails[i]}
                 img={images[i]}
             />
         );
@@ -50,14 +43,14 @@ function Room({ productDetails, images }) {
     );
 }
 
-function Product({ type, link, img }) {
+function Product({ product, img }) {
+    console.log(product.id);
     return (
         <>
-            <a href={link} className={type}>
-                <img src={img} className={type} alt={type} />
-            </a>
+            <Link to={`/product/${product.id}`} className={product.name}>
+                <img src={img} className={product.name} alt={product.name} />
+            </Link>
         </>
     );
 }
-*/
 export default RoomPage;
