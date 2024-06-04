@@ -10,3 +10,13 @@
     justify-content: center;
     align-items: center;
 }
+
+.BigImage {
+    width: 400px;
+    height: 400px;
+}
+
+.ImageRow {
+    width: 100px;
+    height: 100px;
+}

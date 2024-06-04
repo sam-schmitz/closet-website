@@ -21,7 +21,6 @@ function RoomPage({ productDetails, images}) {
 
 function Room({ productDetails, images }) {
     //make the products array
-    console.log(productDetails);
     products = [];
     for (let i = 0; i < productDetails.length; i++) {
         products.push(
