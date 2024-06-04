@@ -11,10 +11,12 @@ const ps = [
 function RoomPage({ productDetails, images}) {
     return (
         <>
-            <Room
-                productDetails={productDetails}
-                images={images}
-            />
+            <div className='Background'>
+                <Room
+                    productDetails={productDetails}
+                    images={images}
+                />
+            </div>
         </>
         )
 }
