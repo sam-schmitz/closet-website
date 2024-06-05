@@ -120,6 +120,12 @@ function ProductInfo({product}) {
         <>
             <div className="productInfo">
                 <h1>{product.name}</h1>
+                <h3>{product.details}</h3>
+                <h3>{product.price}</h3>
+                <h3>Add to wishlist</h3>
+                <a href={product.link} className="RetailerButton">
+                    <h3>Visit the Retailer's Website</h3>
+                </a>
             </div>
         </>
         );

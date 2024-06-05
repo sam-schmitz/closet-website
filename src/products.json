@@ -4,13 +4,17 @@
     "height": "100px",
     "width": "100px",
     "link": "https://www.google.com",
-    "id": 0
+    "id": 0,
+    "price": "$200.00",
+    "details": "This is a dresser"
   },
   {
     "name": "TV",
     "height": "100px",
     "width": "100px",
     "link": "https://www.bing.com",
-    "id":  1
+    "id": 1,
+    "price": "$300.00",
+    "details": "This is a TV"
   }
 ]

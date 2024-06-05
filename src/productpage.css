@@ -20,3 +20,12 @@
     width: 100px;
     height: 100px;
 }
+
+.RetailerButton {
+    display: inline-block;
+    padding: 10px 20px;
+    color: white;
+    background-color: blue;
+    border-radius: 5px;
+    text-align: center;
+}
