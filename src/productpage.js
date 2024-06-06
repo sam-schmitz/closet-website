@@ -85,7 +85,9 @@ function ImageBar({ imgs, setActiveImage }) {
     return (
         <>
             <div className='ImageBar'>
-                {imageRows}
+                <table>
+                    {imageRows}
+                </table>
             </div>
         </>
     );
@@ -99,7 +101,7 @@ function ImageRow({ img, onActiveImageChange }) {
                     <img
                         src={img}
                         onClick={(e) => onActiveImageChange(img)}
-                        className='ImageRow'
+                        className='ImageRowImg'
                     />
                 </td>
             </tr>
@@ -110,7 +112,7 @@ function ImageRow({ img, onActiveImageChange }) {
 function BigImage({ activeImage }) {
     return (
         <>
-            <img src={activeImage} alt='words' className='BigImage' />
+            <img src={activeImage} alt='words' className='BigImageImg' />
         </>
     );
 }
@@ -118,8 +120,8 @@ function BigImage({ activeImage }) {
 function ProductInfo({product}) {
     return (
         <>
-            <div className="productInfo">
-                <h1>{product.name}</h1>
+            <div className="ProductInfo">
+                <h1><b>{product.name}</b></h1>
                 <h3>{product.details}</h3>
                 <h3>{product.price}</h3>
                 <h3>Add to wishlist</h3>

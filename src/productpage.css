@@ -7,18 +7,31 @@
 
 .left, .right {
     display: flex;
+}
+
+.BigImage {
     justify-content: center;
     align-items: center;
 }
 
-.BigImage {
+.BigImageImg {
     width: 400px;
     height: 400px;
+    padding: 15px;
 }
 
-.ImageRow {
+.ImageBar {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-left: 15px;
+}
+
+.ImageRowImg {
     width: 100px;
     height: 100px;
+    text-align: right;
+    padding: 1px;
 }
 
 .RetailerButton {
@@ -28,4 +41,9 @@
     background-color: blue;
     border-radius: 5px;
     text-align: center;
+}
+
+.ProductInfo {
+    text-align: left;
+    padding-left: 15px;
 }
