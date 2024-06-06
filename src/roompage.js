@@ -43,7 +43,6 @@ function Room({ productDetails, images }) {
 }
 
 function Product({ product, img }) {
-    console.log(product.id);
     return (
         <>
             <Link to={`/product/${product.id}`} className={product.name}>

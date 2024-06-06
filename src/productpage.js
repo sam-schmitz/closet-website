@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './productpage.css';
+import { Link } from 'react-router-dom';
 
 const PRODUCTS = require('./products.json')
 const IMAGES = [[require('./images/dresser.jpg'), require('./images/dresser1.jpg'), require('./images/dresser2.jpg'), require('./images/dresser3.jpg')],
@@ -20,16 +21,12 @@ function ProductPage() {
         <>
             <Header />
             <div className='containerLR'>
-                <div className='left'>
-                    <ProductImages
-                        imgs={IMAGES[product.id]}
-                    />
-                </div>
-                <div className='right'>
-                    <ProductInfo
-                        product={product}
-                    />
-                </div>
+                <ProductImages
+                    imgs={IMAGES[product.id]}
+                />
+                <ProductInfo
+                    product={product}
+                />
             </div>
         </>
         );
@@ -39,31 +36,34 @@ function Header() {
     return (
         <>
             <div className="header">
-                <div className="path"></div>
-                <div className="logo"></div>
-                <h1>Header</h1>
+                <div className="containerLR">
+                    <div className="path">
+                        <Link to={`/`}>
+                            <h2>/Room</h2>
+                        </Link>
+                    </div>
+                    <div className="logo">
+                        <h1>Logo</h1>
+                    </div>
+                </div>
             </div>
         </>
         );
 }
 
 function ProductImages({ imgs }) {
-    //activeImage needs to default to imgs[0]
+    //used activeImage is the image that is enlarged
     const [activeImage, setActiveImage] = useState(imgs[0]);
 
     return (
         <>
             <div className="productImages">
                 <div className='containerLR'>
-                    <div className='left'>
-                        <ImageBar
-                            imgs={imgs}
-                            setActiveImage={setActiveImage}
-                        />
-                    </div>
-                    <div className='right'>
-                        <BigImage activeImage={activeImage} />
-                    </div>
+                    <ImageBar
+                        imgs={imgs}
+                        setActiveImage={setActiveImage}
+                    />
+                    <BigImage activeImage={activeImage} />
                 </div>
             </div>
         </>
@@ -78,6 +78,7 @@ function ImageBar({ imgs, setActiveImage }) {
                 img={imgs[i]}
                 alt="image bar"
                 onActiveImageChange={setActiveImage}
+                id={i}
             />
         );
     }
@@ -86,14 +87,16 @@ function ImageBar({ imgs, setActiveImage }) {
         <>
             <div className='ImageBar'>
                 <table>
-                    {imageRows}
+                    <tbody>
+                        {imageRows}
+                    </tbody>
                 </table>
             </div>
         </>
     );
 }
 
-function ImageRow({ img, onActiveImageChange }) {
+function ImageRow({ img, onActiveImageChange, id }) {
     return (
         <>
             <tr>
@@ -102,6 +105,7 @@ function ImageRow({ img, onActiveImageChange }) {
                         src={img}
                         onClick={(e) => onActiveImageChange(img)}
                         className='ImageRowImg'
+                        key={id}
                     />
                 </td>
             </tr>
@@ -122,11 +126,15 @@ function ProductInfo({product}) {
         <>
             <div className="ProductInfo">
                 <h1><b>{product.name}</b></h1>
-                <h3>{product.details}</h3>
-                <h3>{product.price}</h3>
+                <div className="containerLR" >
+                    <h3>{product.details}</h3>
+                    <h3>{product.price}</h3>
+                </div>
                 <h3>Add to wishlist</h3>
-                <a href={product.link} className="RetailerButton">
-                    <h3>Visit the Retailer's Website</h3>
+                <a href={product.link}>
+                    <div className="RetailerButton" >
+                        <h3>Visit the Retailer's Website</h3>
+                    </div>
                 </a>
             </div>
         </>
