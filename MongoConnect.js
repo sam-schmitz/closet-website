@@ -2,142 +2,82 @@
 //By: Sam Schmitz
 
 const {MongoClient, GridFSBucket} = require('mongodb');
-//const fs = require('fs');
-//const path = require('path');
 
-const url = 'mongodb://localhost:27017';
-const dbName = 'test-database';
+const ClothesDBManager = {
+	url: 'mongodb://localhost:27017',
+	dbName: 'test-database',
+	collectionName: 'clothes',
 
-async function main() {
-	const client = new MongoClient(url);
+	//method to connect to the db
+	async connect() {
+		this.client = new MongoClient(this.url);
+		await this.client.connect();
+		console.log('Connected successfully to MongoDB');
+		this.db = this.client.db(this.dbName);
+		this.collection = this.db.collection(this.collectionName);
+	},
 
-	try {
-		//connect to the MongoDB Server
-		await client.connect();
-		console.log('Connected successfully to MongoDB container');
+	//method to add a document
+	async addClothing(garment) {
+		try {
+			//ensure the client is connected
+			if (!this.client) {
+				await this.connect();
+			}
 
-		const db = client.db(dbName);
+			//Use insertOne to add a document
+			let insertResult = await this.collection.insertOne(garment)
+			return insertResult;
+		} catch (error) {
+			console.error('Error ocurred when finding a document:', error);
+			throw error;
+        }
+    },
 
-		//Get a collection
-		const collection = db.collection('myCollection');
+	//method to find a single document
+	async findClothing(query = {}) {
+		try {
+			//ensure the client is connected
+			if (!this.client) {
+				await this.connect();
+			}
 
-		//display the contents of myCollection
-		//const documents = await collection.find({}).toArray();
-		//console.log('Documents in the collection:', documents);
+			//Use findOne to get a single document
+			const findResult = await this.collection.findOne(query);
+			return findResult;
+		} catch (error) {
+			console.error('Error ocurred when finding a document:', error);
+			throw error;
+        }
+    },
 
-		//insert a document
-		const insertResult = await collection.insertOne({name: 'Alice', age:25});
-		console.log("Inserted document:", insertResult)
+	//method to find mutiple documents
+	async findClothes(query = {}) {
+		try {
+			//ensure the client is connected
+			if (!this.client) {
+				await this.connect();
+			}
 
-		//find a document 
-		const findResult = await collection.findOne({name: 'Alice'});
-		console.log("Found document: ", findResult);
+			//Use find to retrieve multiple clothes documents
+			const cursor = this.collection.find(query);
+			const results = await cursor.toArray();
+			return results;
+		} catch (error) {
+			console.error('Error ocurred when finding documents:', error);
+			throw error;
+        }
+	},
 
-		//remove a document
-		const filter = {name: 'Alice'};
-		const deleteResult = await collection.deleteOne(filter);
-		console.log('Deleted document count:', deleteResult.deletedCount);
-	} catch (error) {
-		console.error('Error occurred while deleting document:', error);
-	} finally {
-		//Close the connection
-		await client.close()
-	}
+	//method to close the db
+	async closeConnection() {
+		if (this.client) {
+			await this.client.close();
+			console.log('MongoDB connection closed');
+        }
+    }
 }
 
-async function addClothes(garment) {
-	const client = new MongoClient(url);
-
-	try {
-		//connect to the MongoDB Server
-		await client.connect();
-		console.log('Connected successfully to MongoDB container');
-
-		const db = client.db(dbName);
-		/*
-		//create a GridFS Bucket
-		const bucket = new GridFSBucket(db);
-
-		//array to store the IDs of the images
-		cosnt imageIDs = [];
-
-		//List of image file paths
-		const imagePaths = [
-			path.join(__dirname, 'path-to-your-image.jpg'),
-			path.join(__dirname, 'path-to-your-image2.jpg')
-		];
-		for (const imagePath of imagePaths) {
-			//open an upload stream for each Image
-			let uploadStream = bucket.openUploadStram(path.basename(imagePath));
-
-			//upload the image and store its ID
-			await new Promise((resolve, reject) => {
-				fs.createReadStream(imagePath).pipe(uploadStream).on('finish', () => {
-					console.log(`Image ${path.basename(imagePath)} uploaded with ID:`,uploadStream.id);
-					imageIDs.push(uploadStream.id);
-					resolve();
-				}).on('error', reject);
-			});
-		};
-		*/
-
-		//Get a collection
-		const collection = db.collection('clothes');
-
-		//insert a document
-		let insertResult = await collection.insertOne(garment)
-		console.log("Inserted document:", insertResult)
-	} catch (error) {
-		console.error('Error occured while inserting document:', error);
-	} finally {
-		await client.close()
-	}
-}
-
-async function grabClothing(filter) {
-	const client = new MongoClient(url);
-
-	try {
-		//connect to the MongoDB Server
-		await client.connect();
-		console.log('Connected successfully to MongoDB container');
-
-		const db = client.db(dbName);
-
-		//Get a collection
-		const collection = db.collection('clothes');
-
-		//find a document 
-		const findResult = await collection.findOne(filter);
-		console.log("Found document: ", findResult);
-	} finally {
-		await client.close()
-	}
-}
-
-async function grabClothes(filter) {
-	const client = new MongoClient(url);
-
-	try {
-		//connect to the MongoDB Server
-		await client.connect();
-		console.log('Connected successfully to MongoDB container');
-
-		const db = client.db(dbName);
-
-		//Get a collection
-		const collection = db.collection('clothes');
-
-		//find matching documents
-		const cursor = await collection.find(filter);
-		const results = await cursor.toArray();
-		console.log('Found Documents:', results);
-	} finally {
-		await client.close();
-	}
-}
-
-//main().catch(console.error);
 const sweatShirtUniqlo = {
 	name: 'Sweat Pullover Hoodie',
 	description: 'Fine fabric with a smooth, premium feel. ',
@@ -191,6 +131,12 @@ let filter = {
 	"categories.type": "shirt"
 };
 
-//addClothes(halfzipUniqlo).catch(console.error);
-//grabClothing(filter).catch(console.error);
-grabClothes(filter).catch(console.error);
+(async () => {
+	try {
+		await ClothesDBManager.connect();
+		const documents = await ClothesDBManager.findClothes(filter);
+		console.log('Found documents:', documents);
+	} finally {
+		await ClothesDBManager.closeConnection();
+	}
+})();
